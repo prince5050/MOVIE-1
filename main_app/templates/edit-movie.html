@@ -1,0 +1,132 @@
+{% extends 'layout/base.html'%}
+{% load static %}
+{% block title%}{{movie.name}} Movie Update{%endblock%}
+{% block content_body %}
+<style>
+    .error{
+    color: #bf3c3c;
+    font-weight: 600;
+    }
+    .dele_button {
+        border-radius: 37px;
+    width: 170px;
+    height: 60px;
+    font-weight: 600;
+    }
+</style>
+<div class="our_room">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="titlepage">
+                    <h2 style="font-size:30px;">Update {{movie.name}} Movie</h2>
+                    <p>You can update {{movie.name}} Movie.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 m-4">
+            <form action="/edit-movie/{{movie.pk}}/" id="BookingForm" name="BookingForm" class="main_form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Movie Name</label>
+                        <input class="contactus" placeholder="Enter movie name" type="text" name="name" value="{{movie.name}}" readonly style="background: lightgray;">
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Director Name</label>
+                        <input class="contactus" placeholder="Enter director name" type="text" name="director" value="{{movie.director}}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Stars</label>
+                        <input class="contactus" placeholder="Enter stars name" type="text" name="actor" value="{{movie.actor}}" >
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Writer Name</label>
+                        <input class="contactus" placeholder="Enter writer name" type="text" name="writer" value="{{movie.writer}}"  >
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Release Date</label>
+                        <input class="contactus" type="date" name="release_date" value="{{movie.release_date|date:'Y-m-d'}}" >
+                    </div>
+                    <div class="col-md-6 ">
+                        <label style="font-size: 18px;color: black;">Thumbnail of Movie</label>
+                        <input class="contactus pt-2" type="file" name="thumbnail" accept="image/*">
+
+                        {%if movie.thumbnail%}
+                        <img src="{{movie.thumbnail.url}}" style="border-radius:50%;width: 200px;height: 170px;"/>
+                        {%endif%}
+                    </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <button type="submit" class="send_btn">Update</button>
+                        <a href="/delete-movie/{{movie.pk}}/" class="btn btn-danger dele_button ml-4 mt-2" style="padding-top:18px ">DELETE</a>
+                    </div>
+
+                </div>
+        </div>
+        </form>
+    </div>
+
+</div>
+</div>
+<script>
+
+jQuery.validator.addMethod("phone_regex", function(value, element) {
+    return this.optional(element) || /^[0-9\.\-_]{1,10}$/i.test(value);
+}, "Phone Number with only 0-9. Maxlength: 10");
+
+    $("#BookingForm").validate({
+    rules: {
+        'name': {
+            required: true,
+            minlength: 1
+        },
+
+        'director': {
+            required: true,
+            minlength: 1
+        },
+        'actor': {
+            required: true,
+            minlength: 1
+        },
+         'writer': {
+            required: true,
+            minlength: 1
+        },
+         'release_date': {
+            required: true,
+            minlength: 1
+        },
+
+    },
+    messages: {
+
+        'name': {
+            required: "Name field is mandatory!",
+        },
+        'director': {
+            required: "Director Name  field is mandatory!",
+        },
+        'actor': {
+            required: "Stars Name field is mandatory!",
+        },
+
+        'writer': {
+            required: "Write field is mandatory!",
+        },
+          'release_date': {
+            required: "Release Date field is mandatory!",
+        },
+
+    },
+    submitHandler: function(form) {
+        form.submit();
+    }
+});
+</script>
+{% endblock %}
+

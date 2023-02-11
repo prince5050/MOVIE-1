@@ -1,0 +1,124 @@
+{% extends 'layout/base.html'%}
+{% load static %}
+{% block title%} Add new Movie {%endblock%}
+{% block content_body %}
+<style>
+    .error{
+    color: #bf3c3c;
+    font-weight: 600;
+    }
+</style>
+<div class="our_room">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="titlepage">
+                    <h2 style="font-size:30px;">Add New Movie</h2>
+                    <p>Please fill the movie to add new Moive.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 m-4">
+            <form action="/add-movie/" id="BookingForm" name="BookingForm" class="main_form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Movie Name</label>
+                        <input class="contactus" placeholder="Enter movie name" type="text" name="name"  >
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Director Name</label>
+                        <input class="contactus" placeholder="Enter director name" type="text" name="director" >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Actors Name</label>
+                        <input class="contactus" placeholder="Enter actors name" type="text" name="actor" >
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Writer Name</label>
+                        <input class="contactus" placeholder="Enter writer name" type="text" name="writer" >
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size: 18px;color: black;">Release Date</label>
+                        <input class="contactus" type="date" name="release_date" >
+                    </div>
+                    <div class="col-md-6 ">
+                        <label style="font-size: 18px;color: black;">Thumbnail of Movie</label>
+                        <input class="contactus pt-2" type="file" name="thumbnail" accept="image/*">
+                    </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="send_btn">Add</button>
+                </div>
+        </div>
+        </form>
+    </div>
+
+</div>
+</div>
+<script>
+
+jQuery.validator.addMethod("phone_regex", function(value, element) {
+    return this.optional(element) || /^[0-9\.\-_]{1,10}$/i.test(value);
+}, "Phone Number with only 0-9. Maxlength: 10");
+
+    $("#BookingForm").validate({
+    rules: {
+        'name': {
+            required: true,
+            minlength: 1
+        },
+
+        'director': {
+            required: true,
+            minlength: 1
+        },
+        'actor': {
+            required: true,
+            minlength: 1
+        },
+         'writer': {
+            required: true,
+            minlength: 1
+        },
+         'release_date': {
+            required: true,
+            minlength: 1
+        },
+         'thumbnail': {
+            required: true,
+            minlength: 1
+        },
+    },
+    messages: {
+
+        'name': {
+            required: "Name field is mandatory!",
+        },
+        'director': {
+            required: "Director Name  field is mandatory!",
+        },
+        'actor': {
+            required: "Actor Name field is mandatory!",
+        },
+
+        'writer': {
+            required: "Write field is mandatory!",
+        },
+          'release_date': {
+            required: "Release Date field is mandatory!",
+        },
+          'thumbnail': {
+            required: "Thumbnail field is mandatory!",
+        },
+
+    },
+    submitHandler: function(form) {
+        form.submit();
+    }
+});
+</script>
+{% endblock %}
+
